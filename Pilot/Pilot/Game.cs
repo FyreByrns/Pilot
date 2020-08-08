@@ -29,7 +29,7 @@ namespace Pilot {
         /// <summary>
         /// Whether the game will close at the end of this frame.
         /// </summary>
-        bool quit = false;
+        public bool quit = false;
 
         void UpdateScene(float elapsed) {
             // If there's no scene, end the game.
@@ -56,7 +56,7 @@ namespace Pilot {
         Game() {
             Construct(WIDTH, HEIGHT, 2, 2, FRAMERATE_CAP);
 
-            currentScene = new SplashScreen(this, null);
+            currentScene = new SplashScreen(this, new MainMenu(this));
         }
     }
 }
