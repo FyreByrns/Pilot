@@ -37,16 +37,21 @@ namespace Pilot {
             int my = game.MouseY;
 
             if (game.GetMouse(Mouse.Left).Down) {
-                if (mx > playLocation.X && my > playLocation.Y && mx < playLocation.X + playButton.Width && my < playLocation.Y + playButton.Height)
+                if (IsButtonPressed(mx, my, playLocation, playButton))
                     Play();
-                else if (mx > settingsLocation.X && my > settingsLocation.Y && mx < settingsLocation.X + settingsButton.Width && my < settingsLocation.Y + settingsButton.Height)
+                else if (IsButtonPressed(mx, my, settingsLocation, settingsButton))
                     Settings();
-                else if (mx > quitLocation.X && my > quitLocation.Y && mx < quitLocation.X + quitButton.Width && my < quitLocation.Y + quitButton.Height)
+                else if (IsButtonPressed(mx, my, quitLocation, quitButton))
                     Quit();
             }
 
             sprite.Update(elapsed);
             sprite.Draw(game, mx, my);
+        }
+        
+        public bool IsButtonPressed(float mx, float my, Point location, Sprite button)
+        {
+            return mx > location.X && my > location.Y && mx < location.X + button.Width && my < location.Y + button.Height;
         }
 
         public MainMenu(Game game) : base(game) {
