@@ -11,6 +11,8 @@ namespace Pilot {
         Sprite playButton, settingsButton, quitButton;
         Point playLocation, settingsLocation, quitLocation;
 
+        AnimatedSprite sprite;
+
         void Play() {
             Console.WriteLine("Play!~");
         }
@@ -42,6 +44,9 @@ namespace Pilot {
                 else if (mx > quitLocation.X && my > quitLocation.Y && mx < quitLocation.X + quitButton.Width && my < quitLocation.Y + quitButton.Height)
                     Quit();
             }
+
+            sprite.Update(elapsed);
+            sprite.Draw(game, mx, my);
         }
 
         public MainMenu(Game game) : base(game) {
@@ -52,6 +57,9 @@ namespace Pilot {
             playLocation = new Point(game.ScreenWidth / 2 - playButton.Width / 2, 100);
             settingsLocation = new Point(game.ScreenWidth / 2 - settingsButton.Width / 2, playLocation.Y + playButton.Height + 3);
             quitLocation = new Point(game.ScreenWidth / 2 - quitButton.Width / 2, settingsLocation.Y + settingsButton.Height + 3);
+
+            sprite = new AnimatedSprite("data/test", 18);
+            sprite.Play("default");
         }
     }
 }
