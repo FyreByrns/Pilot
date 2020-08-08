@@ -25,7 +25,7 @@ namespace Pilot {
         /// <summary>
         /// Current scene of the game.
         /// </summary>
-        Scene currentScene;
+        public Scene currentScene;
         /// <summary>
         /// Whether the game will close at the end of this frame.
         /// </summary>
@@ -56,7 +56,7 @@ namespace Pilot {
         Game() {
             Construct(WIDTH, HEIGHT, 2, 2, FRAMERATE_CAP);
 
-            currentScene = new SplashScreen(this);
+            currentScene = new SplashScreen(this, null);
         }
     }
 }
