@@ -48,7 +48,7 @@ namespace Pilot {
 
             // Get the images to display
             imagesToDisplay = new Stack<Sprite>();
-            foreach (string s in File.ReadAllLines("data/splashscreen.txt"))
+            foreach (string s in File.ReadAllLines("data/splashscreen.txt").Reverse())
                 imagesToDisplay.Push(Sprite.Load(s));
         }
     }
