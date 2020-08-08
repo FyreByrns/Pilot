@@ -1,1 +1,1 @@
-data/productions_screen_version2.png
+data/productions_screen_1.png
