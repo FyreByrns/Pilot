@@ -21,7 +21,7 @@ namespace Pilot {
         /// </summary>
         List<Actor> aimless;
         /// <summary>
-        /// Backgrouond graphics.
+        /// Background graphics.
         /// </summary>
         List<PositionableDrawable> decorations;
 
