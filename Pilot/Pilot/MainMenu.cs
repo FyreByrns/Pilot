@@ -14,7 +14,7 @@ namespace Pilot {
         AnimatedSprite sprite;
 
         void Play() {
-            Console.WriteLine("Play!~");
+            game.currentScene = new PlayState(game, "test");
         }
 
         void Settings() {

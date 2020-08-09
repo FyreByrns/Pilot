@@ -1,0 +1,10 @@
+gwidth:1000
+gnext:test2
+agoblin 40
+agoblin 60
+agoblin 80
+dbrick 6 10
+dbrick 21 20
+dbrick 60 40
+dbrick 6 50
+dbrick 1 70

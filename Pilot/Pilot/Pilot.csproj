@@ -55,6 +55,8 @@
     <Compile Include="IDrawable.cs" />
     <Compile Include="IUpdateable.cs" />
     <Compile Include="MainMenu.cs" />
+    <Compile Include="PlayState.cs" />
+    <Compile Include="PositionableDrawable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="SplashScreen.cs" />
@@ -62,17 +64,9 @@
     <Compile Include="World.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\**">
+    <None Include="data\**\**\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="data\*.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="data\*.*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="data\**\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		
     </None>
   </ItemGroup>
   <ItemGroup>

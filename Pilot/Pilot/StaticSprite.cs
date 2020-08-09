@@ -15,6 +15,7 @@ namespace Pilot {
         }
 
         public StaticSprite(string path) {
+            System.Console.WriteLine($"{path}:{System.IO.File.Exists(path)}");
             sprite = Sprite.Load(path);
         }
     }

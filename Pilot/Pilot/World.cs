@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pilot {
     class World : IUpdateable {
+        public float cameraX = 0;
         /// <summary>
         /// How wide the level is. When the player exceeds this, the next level is entered.
         /// </summary>
@@ -19,6 +20,10 @@ namespace Pilot {
         /// AI wandering the level.
         /// </summary>
         List<Actor> aimless;
+        /// <summary>
+        /// Backgrouond graphics.
+        /// </summary>
+        List<PositionableDrawable> decorations;
 
         public bool CollidingWithFloor(Actor actor) {
             return actor.y + actor.height > 300;
@@ -26,6 +31,15 @@ namespace Pilot {
 
         public void Update(float elapsed) {
 
+        }
+
+        public void Draw(Game target) {
+            foreach (PositionableDrawable drawable in decorations) {
+                // TODO: Add check to see if the drawable is onscreen.
+                target.PixelMode = PixelEngine.Pixel.Mode.Alpha;
+                drawable.Draw(target, (int)cameraX, 0);
+                target.PixelMode = PixelEngine.Pixel.Mode.Normal;
+            }
         }
 
         #region     Loading
@@ -42,23 +56,34 @@ namespace Pilot {
 
         void LoadDecoration(string input) {
             Console.WriteLine(input);
+            string[] bits = input.Split(' ');
+            decorations.Add(new PositionableDrawable(
+                new StaticSprite(
+                    $"data/decorations/{bits[0]}.png"),
+                    float.Parse(bits[1]),
+                    float.Parse(bits[2])
+                    )
+                );
         }
         #endregion  Loading
 
         public World(string name) {
+            aimless = new List<Actor>();
+            decorations = new List<PositionableDrawable>();
+
             foreach (string s in File.ReadAllLines($"data/levels/{name}.txt")) {
                 char type = s[0];
-                s.TrimStart(type);
+                string line = s.TrimStart(type);
 
                 switch (type) {
                     case 'g':
-                        LoadGeneral(s);
+                        LoadGeneral(line);
                         break;
                     case 'a':
-                        LoadActor(s);
+                        LoadActor(line);
                         break;
                     case 'd':
-                        LoadDecoration(s);
+                        LoadDecoration(line);
                         break;
                     default:
                         break;
