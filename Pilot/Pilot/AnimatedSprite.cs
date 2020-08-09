@@ -5,12 +5,17 @@ using Sprite = PixelEngine.Sprite;
 using Point = PixelEngine.Point;
 
 namespace Pilot {
-    class AnimatedSprite {
+    class AnimatedSprite : IDrawable {
         Sprite spritesheet;
         int frameWidth;
         string currentAnimation;
         Dictionary<string, Animation> animations;
         float timer;
+
+        public int GetWidth()
+            => frameWidth;
+        public int GetHeight()
+            => spritesheet.Height;
 
         public void Play(string name) {
             currentAnimation = name;
@@ -37,7 +42,7 @@ namespace Pilot {
             animations = new Dictionary<string, Animation>();
             this.frameWidth = frameWidth;
 
-            foreach(string s in File.ReadAllLines($"{path}.txt")) {
+            foreach (string s in File.ReadAllLines($"{path}.txt")) {
                 string[] entry = s.Split(' ');
                 string sname = entry[0];
                 string sduration = entry[1];
