@@ -2,7 +2,7 @@
     /// <summary>
     /// A state of the game.
     /// </summary>
-    class Scene {
+    class Scene : IUpdateable {
         protected Game game;
 
         public virtual void Update(float elapsed) { }

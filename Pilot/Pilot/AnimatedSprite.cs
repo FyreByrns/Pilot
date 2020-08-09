@@ -5,7 +5,7 @@ using Sprite = PixelEngine.Sprite;
 using Point = PixelEngine.Point;
 
 namespace Pilot {
-    class AnimatedSprite : IDrawable {
+    class AnimatedSprite : IDrawable, IUpdateable {
         Sprite spritesheet;
         int frameWidth;
         string currentAnimation;
