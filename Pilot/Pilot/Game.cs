@@ -18,7 +18,7 @@ namespace Pilot {
         #region     Constants
         const int WIDTH = 400,
                   HEIGHT = 300,
-                  FRAMERATE_CAP = 60;
+                  FRAMERATE_CAP = -1;
         #endregion  Constants
 
         #region     Game State Management

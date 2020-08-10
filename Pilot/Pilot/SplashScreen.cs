@@ -28,16 +28,16 @@ namespace Pilot {
             }
 
             currentTimer += elapsed;
-            if (currentTimer <= 0.5f) {
+            if (currentTimer <= 2f) {
                 game.DrawSprite(PixelEngine.Point.Origin, imagesToDisplay.Peek());
             }
-            else if (currentTimer > 0.5f) {
+            else if (currentTimer > 2f) {
                 game.PixelMode = PixelEngine.Pixel.Mode.Alpha;
                 game.Clear(new PixelEngine.Pixel(0, 0, 0, 1));
                 game.PixelMode = PixelEngine.Pixel.Mode.Normal;
             }
 
-            if (currentTimer > 0.55f) {
+            if (currentTimer > 2.5f) {
                 currentTimer = 0;
                 imagesToDisplay.Pop();
             }
