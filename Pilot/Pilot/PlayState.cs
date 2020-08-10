@@ -16,9 +16,9 @@ namespace Pilot {
             if (game.GetKey(PixelEngine.Key.Right).Down) player.x++;
             player.Update(elapsed);
 
-            level.cameraX = game.Lerp(level.cameraX, player.x - 20, elapsed);
+            level.cameraX = game.Lerp(level.cameraX, player.x - 100, elapsed);
 
-            game.Clear(PixelEngine.Pixel.Presets.Beige);
+            game.Clear(PixelEngine.Pixel.Presets.DarkBlue);
             level.Draw(game);
 
 
