@@ -12,12 +12,13 @@ namespace Pilot {
         public float graphicOffsetX, graphicOffsetY;
 
         public virtual void Update(float elapsed) {
-
+            foreach (AnimatedSprite animatedSprite in drawables)
+                animatedSprite.Update(elapsed);
         }
 
-        public virtual void Draw(Game target) {
+        public virtual void Draw(Game target, float offsetX, float offsetY) {
             foreach (IDrawable drawable in drawables)
-                drawable.Draw(target, (int)(x + graphicOffsetX), (int)(y + graphicOffsetY));
+                drawable.Draw(target, (int)(x + graphicOffsetX - offsetX), (int)(y + graphicOffsetY - offsetY));
         }
     }
 }

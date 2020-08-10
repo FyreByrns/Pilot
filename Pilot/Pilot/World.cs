@@ -37,7 +37,7 @@ namespace Pilot {
             foreach (PositionableDrawable drawable in decorations) {
                 // TODO: Add check to see if the drawable is onscreen.
                 target.PixelMode = PixelEngine.Pixel.Mode.Alpha;
-                drawable.Draw(target, (int)cameraX, 0);
+                drawable.Draw(target, -(int)cameraX, 0);
                 target.PixelMode = PixelEngine.Pixel.Mode.Normal;
             }
         }
