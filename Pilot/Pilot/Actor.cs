@@ -11,6 +11,12 @@ namespace Pilot {
         public List<IDrawable> drawables = new List<IDrawable>();
         public float graphicOffsetX, graphicOffsetY;
 
+        public void PlayAnimation(string name) {
+            foreach (IDrawable drawable in drawables)
+                if (drawable is AnimatedSprite animatedSprite)
+                    animatedSprite.Play(name);
+        }
+
         public virtual void Update(float elapsed) {
             foreach (AnimatedSprite animatedSprite in drawables)
                 animatedSprite.Update(elapsed);

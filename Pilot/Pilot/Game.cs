@@ -54,7 +54,7 @@ namespace Pilot {
         #endregion  Loop
 
         Game() {
-            Construct(WIDTH, HEIGHT, 2, 2, FRAMERATE_CAP);
+            Construct(WIDTH, HEIGHT, 3, 3, FRAMERATE_CAP);
 
             currentScene = new SplashScreen(this, new MainMenu(this));
         }
