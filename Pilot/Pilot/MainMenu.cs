@@ -18,7 +18,7 @@ namespace Pilot {
         }
 
         void Settings() {
-            Console.WriteLine("Settings!~");
+            game.currentScene = new SettingsMenu(game, this);
         }
         
         void Editor() {
