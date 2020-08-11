@@ -8,8 +8,8 @@ using PixelEngine;
 
 namespace Pilot {
     class MainMenu : Scene {
-        Sprite playButton, settingsButton, quitButton;
-        Point playLocation, settingsLocation, quitLocation;
+        Sprite playButton, settingsButton, quitButton, editorButton;
+        Point playLocation, settingsLocation, quitLocation, editorLocation;
 
         AnimatedSprite sprite;
 
@@ -18,6 +18,10 @@ namespace Pilot {
         }
 
         void Settings() {
+            game.currentScene = new SettingsMenu(game, this);
+        }
+        
+        void Editor() {
             game.currentScene = new Editor(game);
         }
 
@@ -31,6 +35,7 @@ namespace Pilot {
 
             game.DrawSprite(playLocation, playButton);
             game.DrawSprite(settingsLocation, settingsButton);
+            game.DrawSprite(editorLocation, editorButton);
             game.DrawSprite(quitLocation, quitButton);
 
             int mx = game.MouseX;
@@ -41,6 +46,8 @@ namespace Pilot {
                     Play();
                 else if (IsButtonPressed(mx, my, settingsLocation, settingsButton))
                     Settings();
+                else if (IsButtonPressed(mx, my, editorLocation, editorButton))
+                    Editor();
                 else if (IsButtonPressed(mx, my, quitLocation, quitButton))
                     Quit();
             }
@@ -48,20 +55,17 @@ namespace Pilot {
             sprite.Update(elapsed);
             sprite.Draw(game, mx, my);
         }
-        
-        public bool IsButtonPressed(float mx, float my, Point location, Sprite button)
-        {
-            return mx > location.X && my > location.Y && mx < location.X + button.Width && my < location.Y + button.Height;
-        }
 
         public MainMenu(Game game) : base(game) {
             playButton = Sprite.Load("data/mainmenu/play.png");
             settingsButton = Sprite.Load("data/mainmenu/settings.png");
+            editorButton = Sprite.Load("data/mainmenu/editor.png");
             quitButton = Sprite.Load("data/mainmenu/quit.png");
 
             playLocation = new Point(game.ScreenWidth / 2 - playButton.Width / 2, 100);
             settingsLocation = new Point(game.ScreenWidth / 2 - settingsButton.Width / 2, playLocation.Y + playButton.Height + 3);
-            quitLocation = new Point(game.ScreenWidth / 2 - quitButton.Width / 2, settingsLocation.Y + settingsButton.Height + 3);
+            editorLocation = new Point(game.ScreenWidth / 2 - editorButton.Width / 2, settingsLocation.Y + editorButton.Height + 3);
+            quitLocation = new Point(game.ScreenWidth / 2 - quitButton.Width / 2, editorLocation.Y + settingsButton.Height + 3);
 
             sprite = new AnimatedSprite("data/test", 18);
             sprite.Play("default");
