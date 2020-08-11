@@ -19,11 +19,11 @@ namespace Pilot {
         /// <summary>
         /// AI wandering the level.
         /// </summary>
-        List<Actor> aimless;
+        public List<Actor> actors;
         /// <summary>
         /// Background graphics.
         /// </summary>
-        List<PositionableDrawable> decorations;
+        public List<PositionableDrawable> decorations;
 
         public bool CollidingWithFloor(Actor actor) {
             return actor.y + actor.height > 300;
@@ -34,12 +34,16 @@ namespace Pilot {
         }
 
         public void Draw(Game target) {
+            target.PixelMode = PixelEngine.Pixel.Mode.Alpha;
             foreach (PositionableDrawable drawable in decorations) {
                 // TODO: Add check to see if the drawable is onscreen.
-                target.PixelMode = PixelEngine.Pixel.Mode.Alpha;
-                drawable.Draw(target, -(int)cameraX, 0);
-                target.PixelMode = PixelEngine.Pixel.Mode.Normal;
+                if (drawable.x + drawable.GetWidth() > cameraX) {
+                    drawable.Draw(target, -(int)cameraX, 0);
+                }
             }
+            foreach (Actor actor in actors)
+                actor.Draw(target, (int)cameraX, 0);
+            target.PixelMode = PixelEngine.Pixel.Mode.Normal;
         }
 
         #region     Loading
@@ -68,27 +72,30 @@ namespace Pilot {
         #endregion  Loading
 
         public World(string name) {
-            aimless = new List<Actor>();
+            actors = new List<Actor>();
             decorations = new List<PositionableDrawable>();
 
-            foreach (string s in File.ReadAllLines($"data/levels/{name}.txt")) {
-                char type = s[0];
-                string line = s.TrimStart(type);
+            if (File.Exists($"data/levels/{name}.txt"))
+                foreach (string s in File.ReadAllLines($"data/levels/{name}.txt")) {
+                    char type = s[0];
+                    string line = s.TrimStart(type);
 
-                switch (type) {
-                    case 'g':
-                        LoadGeneral(line);
-                        break;
-                    case 'a':
-                        LoadActor(line);
-                        break;
-                    case 'd':
-                        LoadDecoration(line);
-                        break;
-                    default:
-                        break;
+                    switch (type) {
+                        case 'g':
+                            LoadGeneral(line);
+                            break;
+                        case 'a':
+                            LoadActor(line);
+                            break;
+                        case 'd':
+                            LoadDecoration(line);
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
+            else Console.WriteLine($"New level: {name}");
+
         }
     }
 }
