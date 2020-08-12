@@ -86,6 +86,14 @@ namespace Pilot {
 
                     if (game.GetKey(PixelEngine.Key.S).Pressed)
                         editing.SaveAll();
+
+                    if(game.GetKey(PixelEngine.Key.O).Pressed) {
+                        Console.Write("Discard unsaved changes? y/n\n>");
+                        if (!Console.ReadLine().ToLower().StartsWith("n"))
+                            editing.SaveAll();
+
+                        editing = null;
+                    }
                 }
             }
         }
