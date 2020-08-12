@@ -21,6 +21,10 @@ namespace Pilot {
             if (game.GetKey(PixelEngine.Key.Right).Down) direction++;
             x += direction * speed * elapsed;
 
+            if (game.GetKey(PixelEngine.Key.Up).Down)
+                if (OverlappingGoblin())
+                    Attach(GetOverlappingGoblin());
+
             if (direction == 0) {
                 if (lastDir >= 0)
                     PlayAnimation("idle_right");
@@ -39,7 +43,22 @@ namespace Pilot {
         }
 
         public void Attach(Actor other) {
+            attached = other;
+            y = other.y;
+        }
 
+        bool OverlappingGoblin() {
+            foreach (Actor actor in World.Instance.actors)
+                if (x + width > actor.x && x < actor.x + actor.width)
+                    return true;
+            return false;
+        }
+
+        Goblin GetOverlappingGoblin() {
+            foreach (Actor actor in World.Instance.actors)
+                if (x > actor.x && x < actor.x + actor.width)
+                    return (Goblin)actor;
+            return null;
         }
 
         public Player(Game game, int x) {
@@ -49,7 +68,7 @@ namespace Pilot {
             animation.Play("walk_right");
             drawables.Add(animation);
 
-            y = 200 - animation.GetHeight();
+            y = game.ScreenHeight - animation.GetHeight();
         }
     }
 }

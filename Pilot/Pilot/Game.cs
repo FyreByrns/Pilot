@@ -8,6 +8,8 @@ using PixelEngine;
 
 namespace Pilot {
     class Game : PixelEngine.Game {
+        public static Game Instance;
+
         /// <summary>
         /// Responsible for constructing and starting an instance of the game.
         /// </summary>
@@ -54,6 +56,7 @@ namespace Pilot {
         #endregion  Loop
 
         Game() {
+            Instance = this;
             Construct(WIDTH, HEIGHT, 3, 3, FRAMERATE_CAP);
 
             currentScene = new SplashScreen(this, new MainMenu(this));

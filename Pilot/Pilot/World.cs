@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace Pilot {
     class World : IUpdateable {
+        public static World Instance;
+
         public string name;
         public float cameraX = 0;
         /// <summary>
@@ -74,7 +76,7 @@ namespace Pilot {
         }
 
         void LoadActor(string input) {
-            Console.WriteLine(input);
+            actors.Add(new Goblin(Game.Instance, int.Parse(input.Split(' ')[1])));
         }
 
         void LoadDecoration(string input) {
@@ -124,6 +126,8 @@ namespace Pilot {
         #endregion  Saving / Loading
 
         public World(string name) {
+            Instance = this;
+
             this.name = name;
             actors = new List<Actor>();
             decorations = new List<PositionableDrawable>();

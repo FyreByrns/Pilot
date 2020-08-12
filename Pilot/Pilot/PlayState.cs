@@ -13,6 +13,7 @@ namespace Pilot {
             base.Update(elapsed);
 
             player.Update(elapsed);
+            level.Update(elapsed);
 
             level.cameraX = game.Lerp(level.cameraX, player.x - 100, elapsed * 2);
 
