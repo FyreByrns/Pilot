@@ -39,7 +39,7 @@ namespace Pilot {
             foreach (RainRegion region in rainRegions)
                 if (actor.x + actor.width / 2 > region.startX && actor.x + actor.width / 2 < region.endX)
                     return true;
-                return false;
+            return false;
         }
 
         public void Update(float elapsed) {
@@ -57,6 +57,11 @@ namespace Pilot {
             }
             foreach (Actor actor in actors)
                 actor.Draw(target, (int)cameraX, 0);
+
+            foreach (RainRegion region in rainRegions) {
+                if (region.startX > cameraX && region.startX + region.endX < target.ScreenWidth)
+                    target.FillRect(new PixelEngine.Point((int)(region.startX - cameraX), 0), new PixelEngine.Point((int)region.endX, target.ScreenHeight), new PixelEngine.Pixel(0, 10, 200, 10));
+            }
             target.PixelMode = PixelEngine.Pixel.Mode.Normal;
         }
 
@@ -114,7 +119,7 @@ namespace Pilot {
             foreach (RainRegion region in rainRegions)
                 toSave.Add($"r{region.startX} {region.endX}");
 
-            File.WriteAllLines($"data/levels/{name}.txt",toSave.ToArray());
+            File.WriteAllLines($"data/levels/{name}.txt", toSave.ToArray());
         }
         #endregion  Saving / Loading
 
