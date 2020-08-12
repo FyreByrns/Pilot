@@ -59,8 +59,8 @@ namespace Pilot {
                 actor.Draw(target, (int)cameraX, 0);
 
             foreach (RainRegion region in rainRegions) {
-                if (region.startX > cameraX && region.startX + region.endX < target.ScreenWidth)
-                    target.FillRect(new PixelEngine.Point((int)(region.startX - cameraX), 0), new PixelEngine.Point((int)region.endX, target.ScreenHeight), new PixelEngine.Pixel(0, 10, 200, 10));
+                //if (region.startX > cameraX && region.startX + region.endX < target.ScreenWidth)
+                    target.FillRect(new PixelEngine.Point((int)(region.startX - cameraX), 0), new PixelEngine.Point((int)(region.endX - cameraX), target.ScreenHeight), new PixelEngine.Pixel(0, 10, 200, 100));
             }
             target.PixelMode = PixelEngine.Pixel.Mode.Normal;
         }

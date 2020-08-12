@@ -30,7 +30,7 @@ namespace Pilot {
                 lastMY = game.MouseY;
             }
             else { // Draw the current level, edit it, etc
-                game.Clear(PixelEngine.Pixel.Presets.DarkBlue);
+                game.Clear(PixelEngine.Pixel.Presets.Black);
                 editing.Draw(game);
 
                 int mx = game.MouseX;
@@ -78,29 +78,34 @@ namespace Pilot {
                             break;
 
                         case EditorState.Rain:
-                            // Is the mouse near a rain boundary?
+                            float camMX = mx + editing.cameraX;
+                            // Is the mouse on a rain region?
                             World.RainRegion region = null;
-                            bool editingStart = false;
                             foreach (var r in editing.rainRegions) {
-                                float differenceStart = (mx + editing.cameraX) - r.startX;
-                                float differenceEnd = (mx + editing.cameraX) - r.endX;
-                                float difference = Math.Min(mx - r.startX, mx - r.endX);
-
-                                if (difference < 20) {
+                                if (camMX > r.startX && camMX < r.endX) {
                                     region = r;
-                                    editingStart = differenceStart < differenceEnd;
                                     break;
                                 }
                             }
 
-                            if (region != null) { // If so, edit it.
-                                if (editingStart)
-                                    region.startX = mx + editing.cameraX;
-                                else
-                                    region.endX = mx + editing.cameraX;
+                            if (region != null) {
+                                // If so, edit it.
+                                if (game.GetKey(PixelEngine.Key.J).Down)
+                                    region.startX--;
+                                if (game.GetKey(PixelEngine.Key.K).Down)
+                                    region.startX++;
+
+                                if (game.GetKey(PixelEngine.Key.Left).Down)
+                                    region.endX--;
+                                if (game.GetKey(PixelEngine.Key.Right).Down)
+                                    region.endX++;
+
+                                if (game.GetMouse(PixelEngine.Mouse.Right).Down)
+                                    editing.rainRegions.Remove(region);
                             }
-                            else  // Otherwise, make a new one.
-                                editing.rainRegions.Add(new World.RainRegion((float)mx + editing.cameraX, (float)mx + editing.cameraX + 20));
+                            else
+                                // Otherwise, make a new one.
+                                editing.rainRegions.Add(new World.RainRegion(mx + editing.cameraX - 20, mx + editing.cameraX + 20));
                             break;
                     }
                 }
