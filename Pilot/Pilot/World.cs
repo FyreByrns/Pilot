@@ -28,7 +28,7 @@ namespace Pilot {
         /// <summary>
         /// Regions of rain in the level.
         /// </summary>
-        List<RainRegion> rainRegions;
+        public List<RainRegion> rainRegions;
 
         Dictionary<PositionableDrawable, string> names; // HACK
 
@@ -154,7 +154,7 @@ namespace Pilot {
             else Console.WriteLine($"New level: {name}");
         }
 
-        class RainRegion {
+        public class RainRegion {
             public float startX, endX;
 
             public RainRegion(float startX, float endX) {
