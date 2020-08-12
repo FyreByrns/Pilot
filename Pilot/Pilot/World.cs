@@ -25,11 +25,15 @@ namespace Pilot {
         /// Background graphics.
         /// </summary>
         public List<PositionableDrawable> decorations;
+        /// <summary>
+        /// Regions of rain in the level.
+        /// </summary>
+        List<RainRegion> rainRegions;
 
         Dictionary<PositionableDrawable, string> names; // HACK
 
-        public bool CollidingWithFloor(Actor actor) {
-            return actor.y + actor.height > 300;
+        public bool CollidingWithFloor(Actor actor, Game game) {
+            return actor.y + actor.height > game.ScreenHeight;
         }
 
         public void Update(float elapsed) {
@@ -76,6 +80,11 @@ namespace Pilot {
             names[drawable] = pieces[0]; // HACK
         }
 
+        void LoadRain(string input) {
+            string[] pieces = input.Split(' ');
+            rainRegions.Add(new RainRegion(float.Parse(pieces[0]), float.Parse(pieces[1])));
+        }
+
         /// <summary>
         /// Save the level to the levels folder.
         /// </summary>
@@ -93,6 +102,10 @@ namespace Pilot {
             // Save all npcs
             foreach (Actor actor in actors)
                 toSave.Add($"agoblin {actor.x}"); // Originally I intended to have more actors than goblins, but all of them will be goblins because time.
+
+            // Save all rain
+            foreach (RainRegion region in rainRegions)
+                toSave.Add($"r{region.startX} {region.endX}");
 
             File.WriteAllLines($"data/levels/{name}.txt",toSave.ToArray());
         }
@@ -119,12 +132,23 @@ namespace Pilot {
                         case 'd':
                             LoadDecoration(line);
                             break;
+                        case 'r':
+                            LoadRain(line);
+                            break;
                         default:
                             break;
                     }
                 }
             else Console.WriteLine($"New level: {name}");
+        }
 
+        class RainRegion {
+            public float startX, endX;
+
+            public RainRegion(float startX, float endX) {
+                this.startX = startX;
+                this.endX = endX;
+            }
         }
     }
 }
