@@ -32,6 +32,16 @@ namespace Pilot {
 
         Dictionary<PositionableDrawable, string> names; // HACK
 
+        /// <summary>
+        /// Returns whether an actors middle is within a region of rain.
+        /// </summary>
+        public bool WithinRain(Actor actor) {
+            foreach (RainRegion region in rainRegions)
+                if (actor.x + actor.width / 2 > region.startX && actor.x + actor.width / 2 < region.endX)
+                    return true;
+                return false;
+        }
+
         public void Update(float elapsed) {
             foreach (Actor actor in actors)
                 actor.Update(elapsed);
