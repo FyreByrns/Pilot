@@ -39,38 +39,41 @@ namespace Pilot {
                     PositionableDrawable decoration = GetSelectedDecoration((int)(mx + editing.cameraX), my, lastMX, lastMY);
                     Actor actor = GetSelectedActor((int)(mx + editing.cameraX), lastMX);
 
-                    if (my > game.ScreenHeight - 100) { // If the mouse is in NPC area
-                        game.PixelMode = PixelEngine.Pixel.Mode.Alpha;
-                        game.FillRect(new PixelEngine.Point(0, 300 - 100), new PixelEngine.Point(game.ScreenWidth, 300), new PixelEngine.Pixel(255, 255, 255, 10));
-                        game.PixelMode = PixelEngine.Pixel.Mode.Normal;
+                    if (state == EditorState.Decorations) {
+                        if (decoration != null) { // If there's a decoration under the mouse
+                            decoration.x = mx - decoration.GetWidth() / 2 + editing.cameraX;
+                            decoration.y = my - decoration.GetHeight() / 2;
 
-                        if (actor != null) {
-                            actor.x = mx - actor.width / 2 + editing.cameraX;
+                            if (game.GetMouse(PixelEngine.Mouse.Right).Down)
+                                editing.decorations.Remove(decoration);
                         }
-                        else {
-                            Actor player;
-                            player = new Actor {
-                                x = mx - 4 + editing.cameraX,
-                                y = 300 - 40,
-                                width = 22,
-                                height = 40
-                            };
-                            player.drawables.Add(new AnimatedSprite("data/animations/possessed", 22));
-                            ((AnimatedSprite)player.drawables[0]).Play("run_left");
-                            editing.actors.Add(player);
-                        }
+                        else if (!string.IsNullOrEmpty(currentDecoration))
+                            editing.decorations.Add(new PositionableDrawable(new StaticSprite($"data/decorations/{currentDecoration}.png"), editing.cameraX + mx - 4, my - 4));
                     }
                     else
-                    // Otherwise, editing decorations
-                    if (decoration != null) { // If there's a decoration under the mouse
-                        decoration.x = mx - decoration.GetWidth() / 2 + editing.cameraX;
-                        decoration.y = my - decoration.GetHeight() / 2;
+                    if (state == EditorState.Actors) {
+                        if (my > game.ScreenHeight - 100) { // If the mouse is in NPC area
+                            game.PixelMode = PixelEngine.Pixel.Mode.Alpha;
+                            game.FillRect(new PixelEngine.Point(0, 300 - 100), new PixelEngine.Point(game.ScreenWidth, 300), new PixelEngine.Pixel(255, 255, 255, 10));
+                            game.PixelMode = PixelEngine.Pixel.Mode.Normal;
 
-                        if (game.GetMouse(PixelEngine.Mouse.Right).Down)
-                            editing.decorations.Remove(decoration);
+                            if (actor != null) {
+                                actor.x = mx - actor.width / 2 + editing.cameraX;
+                            }
+                            else {
+                                Actor player;
+                                player = new Actor {
+                                    x = mx - 4 + editing.cameraX,
+                                    y = game.ScreenHeight - 40,
+                                    width = 22,
+                                    height = 40
+                                };
+                                player.drawables.Add(new AnimatedSprite("data/animations/possessed", 22));
+                                ((AnimatedSprite)player.drawables[0]).Play("run_left");
+                                editing.actors.Add(player);
+                            }
+                        }
                     }
-                    else if (!string.IsNullOrEmpty(currentDecoration))
-                        editing.decorations.Add(new PositionableDrawable(new StaticSprite($"data/decorations/{currentDecoration}.png"), editing.cameraX + mx - 4, my - 4));
                 }
 
                 if (game.GetMouse(PixelEngine.Mouse.Middle).Down) {
