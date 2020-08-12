@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pilot {
     class World : IUpdateable {
+        public string name;
         public float cameraX = 0;
         /// <summary>
         /// How wide the level is. When the player exceeds this, the next level is entered.
@@ -24,6 +25,8 @@ namespace Pilot {
         /// Background graphics.
         /// </summary>
         public List<PositionableDrawable> decorations;
+
+        Dictionary<PositionableDrawable, string> names; // HACK
 
         public bool CollidingWithFloor(Actor actor) {
             return actor.y + actor.height > 300;
@@ -46,7 +49,7 @@ namespace Pilot {
             target.PixelMode = PixelEngine.Pixel.Mode.Normal;
         }
 
-        #region     Loading
+        #region     Saving / Loading
         void LoadGeneral(string input) {
             if (input.StartsWith("width:"))
                 width = float.Parse(input.Split(':')[1]);
@@ -60,20 +63,44 @@ namespace Pilot {
 
         void LoadDecoration(string input) {
             Console.WriteLine(input);
-            string[] bits = input.Split(' ');
-            decorations.Add(new PositionableDrawable(
+            string[] pieces = input.Split(' ');
+
+            PositionableDrawable drawable = new PositionableDrawable(
                 new StaticSprite(
-                    $"data/decorations/{bits[0]}.png"),
-                    float.Parse(bits[1]),
-                    float.Parse(bits[2])
-                    )
-                );
+                    $"data/decorations/{pieces[0]}.png"),
+                    float.Parse(pieces[1]),
+                    float.Parse(pieces[2])
+                    );
+
+            decorations.Add(drawable);
+            names[drawable] = pieces[0]; // HACK
         }
-        #endregion  Loading
+
+        /// <summary>
+        /// Save the level to the levels folder.
+        /// </summary>
+        void SaveAll() {
+            List<string> toSave = new List<string>();
+
+            // Save width & next level
+            toSave.Add($"width:{width}");
+            toSave.Add($"next:{nextWorld}");
+
+            // Save all decorations
+            foreach (PositionableDrawable staticSprite in decorations)
+                toSave.Add($"d{names[staticSprite] /* HACK */} {staticSprite.x} {staticSprite.y}");
+
+            // Save all npcs
+            foreach (Actor actor in actors)
+                toSave.Add($"agoblin {actor.x}"); // Originally I intended to have more actors than goblins, but all of them will be goblins because time.
+        }
+        #endregion  Saving / Loading
 
         public World(string name) {
+            this.name = name;
             actors = new List<Actor>();
             decorations = new List<PositionableDrawable>();
+            names = new Dictionary<PositionableDrawable, string>(); // HACK
 
             if (File.Exists($"data/levels/{name}.txt"))
                 foreach (string s in File.ReadAllLines($"data/levels/{name}.txt")) {
