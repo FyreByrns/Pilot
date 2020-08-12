@@ -105,6 +105,12 @@ namespace Pilot {
                         editing = null;
                     }
                 }
+                else {
+                    if (game.GetKey(PixelEngine.Key.D).Pressed)
+                        state = EditorState.Decorations;
+                    if (game.GetKey(PixelEngine.Key.A).Pressed)
+                        state = EditorState.Actors;
+                }
             }
         }
 
