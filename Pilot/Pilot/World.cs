@@ -79,7 +79,7 @@ namespace Pilot {
         /// <summary>
         /// Save the level to the levels folder.
         /// </summary>
-        void SaveAll() {
+        public void SaveAll() {
             List<string> toSave = new List<string>();
 
             // Save width & next level

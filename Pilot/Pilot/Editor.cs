@@ -83,6 +83,9 @@ namespace Pilot {
                         currentDecoration = Console.ReadLine();
                         if (!System.IO.File.Exists($"data/decorations/{currentDecoration}.png")) goto retry;
                     }
+
+                    if (game.GetKey(PixelEngine.Key.S).Pressed)
+                        editing.SaveAll();
                 }
             }
         }
