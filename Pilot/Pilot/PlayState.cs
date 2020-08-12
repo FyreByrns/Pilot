@@ -53,12 +53,12 @@ namespace Pilot {
 
             player = new Actor {
                 x = 10,
-                y = 300 - 40,
+                y = game.ScreenHeight - 40,
                 width = 22,
                 height = 40
             };
-            player.drawables.Add(new AnimatedSprite("data/animations/possessed", 22));
-            ((AnimatedSprite)player.drawables[0]).Play("run_left");
+            player.drawables.Add(new AnimatedSprite("data/animations/flame", 22));
+            ((AnimatedSprite)player.drawables[0]).Play("walk_right");
         }
     }
 }

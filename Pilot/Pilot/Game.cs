@@ -17,7 +17,7 @@ namespace Pilot {
 
         #region     Constants
         const int WIDTH = 400,
-                  HEIGHT = 300,
+                  HEIGHT = 200,
                   FRAMERATE_CAP = -1;
         #endregion  Constants
 

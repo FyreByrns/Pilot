@@ -1,2 +1,2 @@
-walk_right 0,1,2,3,4
-walk_left -1,-2,-3,-4,-5
+walk_right 0.1 0,1,2,3,4
+walk_left 0.1 -1,-2,-3,-4,-5
