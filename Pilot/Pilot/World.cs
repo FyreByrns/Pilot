@@ -93,6 +93,8 @@ namespace Pilot {
             // Save all npcs
             foreach (Actor actor in actors)
                 toSave.Add($"agoblin {actor.x}"); // Originally I intended to have more actors than goblins, but all of them will be goblins because time.
+
+            File.WriteAllLines($"data/levels/{name}.txt",toSave.ToArray());
         }
         #endregion  Saving / Loading
 
