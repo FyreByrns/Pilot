@@ -61,6 +61,9 @@ namespace Pilot {
 
                                 if (actor != null) {
                                     actor.x = mx - actor.width / 2 + editing.cameraX;
+
+                                    if (game.GetMouse(PixelEngine.Mouse.Right).Down)
+                                        editing.actors.Remove(actor);
                                 }
                                 else {
                                     Actor player;
