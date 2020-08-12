@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 namespace Pilot {
     class Editor : Scene {
         World editing;
-        int lastMX;
+        int lastMX, lastMY;
         string currentDecoration;
 
         public override void Update(float elapsed) {
@@ -20,6 +20,7 @@ namespace Pilot {
                 editing = new World(Console.ReadLine());
 
                 lastMX = game.MouseX;
+                lastMY = game.MouseY;
             }
             else { // Draw the current level, edit it, etc
                 game.Clear(PixelEngine.Pixel.Presets.DarkBlue);
@@ -29,8 +30,8 @@ namespace Pilot {
                 int my = game.MouseY;
 
                 if (game.GetMouse(PixelEngine.Mouse.Left).Down) {
-                    PositionableDrawable decoration = GetSelectedDecoration((int)(mx + editing.cameraX), my);
-                    Actor actor = GetSelectedActor((int)(mx + editing.cameraX), my);
+                    PositionableDrawable decoration = GetSelectedDecoration((int)(mx + editing.cameraX), my, lastMX, lastMY);
+                    Actor actor = GetSelectedActor((int)(mx + editing.cameraX), lastMX);
 
                     if (my > game.ScreenHeight - 100) { // If the mouse is in NPC area
                         game.PixelMode = PixelEngine.Pixel.Mode.Alpha;
@@ -86,16 +87,17 @@ namespace Pilot {
             }
         }
 
-        PositionableDrawable GetSelectedDecoration(int selectX, int selectY) {
+        PositionableDrawable GetSelectedDecoration(int selectX, int selectY, int lastSelectX, int lastSelectY) {
             foreach (PositionableDrawable drawable in editing.decorations)
-                if (selectX > drawable.x && selectX < drawable.x + drawable.GetWidth() && selectY > drawable.y && selectY < drawable.y + drawable.GetHeight())
+                if (selectX > drawable.x && selectX < drawable.x + drawable.GetWidth() && selectY > drawable.y && selectY < drawable.y + drawable.GetHeight() ||
+                    lastSelectX > drawable.x && lastSelectX < drawable.x + drawable.GetWidth() && selectY > drawable.y && selectY < drawable.y + drawable.GetHeight())
                     return drawable;
             return null;
         }
 
-        Actor GetSelectedActor(int selectX, int selectY) {
+        Actor GetSelectedActor(int selectX, int lastSelectX) {
             foreach (Actor actor in editing.actors)
-                if (selectX > actor.x && selectX < actor.x + actor.width /*&& selectY > actor.y && selectY < actor.y + actor.height*/)
+                if (selectX > actor.x && selectX < actor.x + actor.width || lastSelectX > actor.x && lastSelectX < actor.x + actor.width)
                     return actor;
             return null;
         }
