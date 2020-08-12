@@ -88,6 +88,7 @@ namespace Pilot {
                         editing.SaveAll();
 
                     if(game.GetKey(PixelEngine.Key.O).Pressed) {
+                        BringConsoleToFront();
                         Console.Write("Discard unsaved changes? y/n\n>");
                         if (!Console.ReadLine().ToLower().StartsWith("n"))
                             editing.SaveAll();
