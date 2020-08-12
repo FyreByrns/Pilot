@@ -33,7 +33,8 @@ namespace Pilot {
         Dictionary<PositionableDrawable, string> names; // HACK
 
         public void Update(float elapsed) {
-
+            foreach (Actor actor in actors)
+                actor.Update(elapsed);
         }
 
         public void Draw(Game target) {
