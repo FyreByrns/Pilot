@@ -7,7 +7,13 @@ using System.Runtime.InteropServices;
 
 namespace Pilot {
     class Editor : Scene {
+        enum EditorState {
+            Decorations,
+            Actors
+        }
+
         World editing;
+        EditorState state;
         int lastMX, lastMY;
         string currentDecoration;
 
@@ -87,7 +93,7 @@ namespace Pilot {
                     if (game.GetKey(PixelEngine.Key.S).Pressed)
                         editing.SaveAll();
 
-                    if(game.GetKey(PixelEngine.Key.O).Pressed) {
+                    if (game.GetKey(PixelEngine.Key.O).Pressed) {
                         BringConsoleToFront();
                         Console.Write("Discard unsaved changes? y/n\n>");
                         if (!Console.ReadLine().ToLower().StartsWith("n"))
