@@ -32,10 +32,6 @@ namespace Pilot {
 
         Dictionary<PositionableDrawable, string> names; // HACK
 
-        public bool CollidingWithFloor(Actor actor, Game game) {
-            return actor.y + actor.height > game.ScreenHeight;
-        }
-
         public void Update(float elapsed) {
 
         }
