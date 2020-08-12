@@ -127,6 +127,8 @@ namespace Pilot {
             this.name = name;
             actors = new List<Actor>();
             decorations = new List<PositionableDrawable>();
+            rainRegions = new List<RainRegion>();
+
             names = new Dictionary<PositionableDrawable, string>(); // HACK
 
             if (File.Exists($"data/levels/{name}.txt"))
